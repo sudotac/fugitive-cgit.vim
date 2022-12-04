@@ -1,30 +1,65 @@
 Before:
-    Save g:fugitive_gitlab_domains
+    Save g:fugitive_cgit_domains
 
-    unlet! g:autoloaded_fugitive_gitlab_api
-    unlet! g:autoloaded_fugitive_gitlab_utils
-    runtime autoload/gitlab/utils.vim
-    runtime autoload/gitlab/api.vim
+    unlet! g:autoloaded_fugitive_cgit_utils
+    runtime autoload/cgit/utils.vim
 
 After:
-    Restore g:fugitive_gitlab_domains
+    Restore g:fugitive_cgit_domains
 
-Execute (gitlab#utils#split_remote):
-    let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
-    let expected = {'root': 'https://my.gitlab.com', 'project': 'shumphrey/fugitive-gitlab.vim', 'domain': 'my.gitlab.com'}
+Execute (cgit#utils#parse_cgit_domains):
+    let g:fugitive_cgit_domains = ['https://git.example.com']
+    let expected = {'git.example.com': {'root': 'https://git.example.com'}}
 
-    let res = gitlab#utils#split_remote('git@my.gitlab.com:shumphrey/fugitive-gitlab.vim.git')
+    let res = cgit#utils#parse_cgit_domains()
     AssertEqual res, expected
 
-    let res = gitlab#utils#split_remote('https://my.gitlab.com/shumphrey/fugitive-gitlab.vim.git')
+Execute (cgit#utils#parse_cgit_domains - simple dict config):
+    let g:fugitive_cgit_domains = {'https://git.example.com': 'https://git.example.com'}
+    let expected = {'https://git.example.com': {'root': 'https://git.example.com'}}
+
+    let res = cgit#utils#parse_cgit_domains()
     AssertEqual res, expected
 
-    let res = gitlab#utils#split_remote('ssh://git@my.gitlab.com/shumphrey/fugitive-gitlab.vim.git')
+Execute (cgit#utils#parse_cgit_domains - simple dict config with explicit ssh://):
+    let g:fugitive_cgit_domains = {'ssh://ssh.example.com': 'https://git.example.com'}
+    let expected = {'ssh://ssh.example.com': {'root': 'https://git.example.com'}}
+
+    let res = cgit#utils#parse_cgit_domains()
     AssertEqual res, expected
 
-Execute (gitlab#utils#split_remote - with dict config):
-    let g:fugitive_gitlab_domains = { 'my.gitlab.com': 'https://my.gitlab.com' }
+Execute (cgit#utils#parse_cgit_domains - full dict config):
+    let g:fugitive_cgit_domains = {
+        \ 'ssh://ssh.example.com': {
+        \     'root': 'https://git.example.com',
+        \     'prefix': '/srv/git',
+        \     'remove-suffix': v:true
+        \ }
+    \ }
+    let expected = {
+        \ 'ssh://ssh.example.com': {
+        \     'root': 'https://git.example.com',
+        \     'prefix': '/srv/git',
+        \     'remove-suffix': v:true
+        \ }
+    \ }
 
-    let expected = {'root': 'https://my.gitlab.com', 'project': 'shumphrey/fugitive-gitlab.vim', 'domain': 'my.gitlab.com'}
-    let res = gitlab#utils#split_remote('git@my.gitlab.com:shumphrey/fugitive-gitlab.vim.git')
+    let res = cgit#utils#parse_cgit_domains()
     AssertEqual res, expected
+
+Execute (cgit#utils#parse_cgit_domains - full dict config without root key):
+    let g:fugitive_cgit_domains = {
+        \ 'ssh://ssh.example.com': {
+        \     'prefix': '/srv/git',
+        \     'remove-suffix': v:true
+        \ }
+    \ }
+    AssertThrows cgit#utils#parse_cgit_domains
+
+Execute (cgit#utils#parse_cgit_domains - full dict config with array value):
+    let g:fugitive_cgit_domains = {
+        \ 'ssh://ssh.example.com': [
+        \     'https://git.example.com'
+        \ ]
+    \ }
+    AssertThrows cgit#utils#parse_cgit_domains

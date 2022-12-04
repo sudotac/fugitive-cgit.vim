@@ -1,0 +1,87 @@
+*fugitive-cgit.txt*  cgit integration for fugitive
+
+Author:  sudotac <sudo@tofuyard.net>
+License: CC0-1.0 AND MIT
+
+INTRODUCTION                                    *fugitive-cgit*
+
+This plugin to fugitive allows the |:GBrowse| command to
+work with your private cgit instance.
+
+See |fugitive| for documentation on |:GBrowse| documentation.
+
+
+CONFIGURATION                                   *fugitive-cgit-config*
+
+Before you use |:GBrowse| you must define g:fugitive_cgit_domains correctly.
+
+If you clone and browse cgit through HTTP(S), you can configure it as an array
+of URLs as follows:
+
+  let g:fugitive_cgit_domains = ['https://git.example.com']
+
+
+If clone URL and cgit URL are different, you can configure it like this:
+
+  let g:fugitive_cgit_domains = {'ssh://ssh.example.com': 'https://git.example.com'}
+
+
+If you need more complicated settings, for example, clone URL and cgit are
+hosted on different sub-directory, then you have to configure some values per
+remote host.
+
+Suppose that you use the following cgitrc:
+
+  clone-url=https://git.example.com/cgit/$CGIT_REPO_URL
+  scan-path=/srv/git
+  remove-suffix=1
+
+If git repositories are located on /srv/git and you can access to
+ssh.example.com through SSH then, you can clone ssh://ssh.example.com/srv/git/repo.git
+and browse cgit on https://git.example.com/repo.
+
+In this situation you have to define g:fugitive_cgit_domains as an dictionary of
+dictionaries like this:
+
+  let g:fugitive_cgit_domains = {
+    \   'ssh://ssh.example.com': {
+    \     'root': 'https://git.example.com/cgit',
+    \     'prefix': '/srv/git',
+    \     'remove-git-suffix': v:true
+    \   }
+    \ }
+
+'root' is cgit URL including sub-directories.
+'prefix' is part of clone URL which is not contained in cgit URL.
+'remove-git-suffix' is boolean value which states '.git' suffix should be
+stripped from cgit URL or not.
+
+
+COMMANDS                                        *fugitive-cgit-commands*
+
+fugitive-cgit does not provide any of its own commands.
+See |fugitive| for its commands
+
+
+ABOUT                                           *fugitive-cgit-about*
+
+Grab the latest version on my own cgit server.
+
+https://git.tofuyard.net/fugitive-cgit.vim
+
+If you want to report a bug or submit a patch, then please send me an email.
+
+
+LICENSE                                         *fugitive-cgit-license*
+
+This plugin is distributed under the term of CC0.
+See COPYING.txt for more details.
+
+This plugin is based on fugitive-gitlab, which is distributed under the term
+of the MIT License. You also have to follow LICENSE.fugitive-gitlab if you
+want to use this plugin.
+
+https://github.com/shumphrey/fugitive-gitlab.vim
+
+
+ vim:tw=78:et:ft=help:norl:
