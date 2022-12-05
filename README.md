@@ -1,7 +1,5 @@
 # fugitive-cgit.vim
 
-[![Fugitive cgit](https://github.com/sudotac/fugitive-cgit.vim/actions/workflows/vader.yml/badge.svg?branch=master)](https://github.com/sudotac/fugitive-cgit.vim/actions/workflows/vader.yml)
-
 [fugitive.vim][] is undoubtedly the best Git wrapper of all time.
 
 This plugin allows you to use it with a cgit instance.
