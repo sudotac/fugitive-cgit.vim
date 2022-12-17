@@ -1,4 +1,4 @@
-name: Fugitive GitLab
+name: Fugitive cgit
 on: [push, pull_request]
 jobs:
   Vader:
@@ -24,8 +24,8 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
         with:
-          path: fugitive-gitlab.vim
+          path: fugitive-cgit.vim
       - name: Install packages
         run: sudo apt-get install -y ${{ matrix.vim.package }} curl
       - name: Run vader against ${{ matrix.vim.package }}
-        run: ${{ matrix.vim.bin }} -Es -Nu fugitive-gitlab.vim/test/vimrc -c "Vader! fugitive-gitlab.vim/test/*" 2>&1
+        run: ${{ matrix.vim.bin }} -Es -Nu fugitive-cgit.vim/test/vimrc -c "Vader! fugitive-cgit.vim/test/*" 2>&1

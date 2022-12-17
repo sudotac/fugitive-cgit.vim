@@ -65,11 +65,9 @@ See |fugitive| for its commands
 
 ABOUT                                           *fugitive-cgit-about*
 
-Grab the latest version on my own cgit server.
+Grab the latest version or report a bug on GitHub:
 
-https://git.tofuyard.net/fugitive-cgit.vim
-
-If you want to report a bug or submit a patch, then please send me an email.
+https://github.com/sudotac/fugitive-cgit.vim
 
 
 LICENSE                                         *fugitive-cgit-license*
