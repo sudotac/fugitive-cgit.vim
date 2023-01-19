@@ -63,6 +63,15 @@ let g:fugitive_cgit_domains = {
     \ }
 ```
 
+## License
+
+This plugin is distributed under the term of CC0.
+See COPYING.txt for more details.
+
+This plugin is based on [fugitive-gitlab.vim](https://github.com/shumphrey/fugitive-gitlab.vim),
+which is distributed under the term of the MIT License.
+You also have to follow LICENSE.fugitive-gitlab if you want to use this plugin.
+
 ## FAQ
 
 > Why doesn't this plugin have a pun name?
