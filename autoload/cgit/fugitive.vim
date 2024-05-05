@@ -31,9 +31,9 @@ function! cgit#fugitive#handler(opts, ...)
     endif
 
     " check if 'commit' is actually commit-id or not.
-    " FIXME: cannot handle the branch name which consists of 40 character hex string.
+    " FIXME: cannot handle the branch name which consists of 40 or 64 character hex string.
     " It's technically possible, though I haven't seen such a branch name...
-    if commit =~# '^\x\{40\}'
+    if commit =~# '^\x\{40\}$' || commit =~# '^\x\{64\}$'
         let key = 'id'
     else
         let key = 'h'
