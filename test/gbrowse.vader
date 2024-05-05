@@ -40,6 +40,20 @@ Execute (GBrowse - blob with range):
 
     AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/tree/myfile.vim?id=a935a734765575b33da6c50fe8d0175e70e0e542#n1', url
 
+Execute (GBrowse - blob with range, sha256):
+    let opts = {
+      \'remote': 'git@git.example.com:fugitive-cgit.vim.git',
+      \'commit': 'a721dec6a63fe25c2f3377108e17ea8edced3342869ea7605f1a71a7cf2b9d35',
+      \'type': 'blob',
+      \'path': 'myfile.vim',
+      \'line1': 1,
+      \'line2': 3,
+    \}
+    let url = g:fugitive_browse_handlers[0](opts)
+
+    AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/tree/myfile.vim?id=a721dec6a63fe25c2f3377108e17ea8edced3342869ea7605f1a71a7cf2b9d35#n1', url
+
+
 Execute (GBrowse - directory tree):
     let opts = {
       \'remote': 'git@git.example.com:fugitive-cgit.vim.git',
@@ -59,6 +73,16 @@ Execute (GBrowse - commit type):
     let g:fugitive_cgit_domains = ['https://git.example.com']
     let url = g:fugitive_browse_handlers[0](opts)
     AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/commit/?id=a935a734765575b33da6c50fe8d0175e70e0e542', url
+
+Execute (GBrowse - commit type, sha256):
+    let opts = {
+      \'remote': 'git@git.example.com:fugitive-cgit.vim.git',
+      \'commit': 'a721dec6a63fe25c2f3377108e17ea8edced3342869ea7605f1a71a7cf2b9d35',
+      \'type': 'commit',
+    \}
+    let g:fugitive_cgit_domains = ['https://git.example.com']
+    let url = g:fugitive_browse_handlers[0](opts)
+    AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/commit/?id=a721dec6a63fe25c2f3377108e17ea8edced3342869ea7605f1a71a7cf2b9d35', url
 
 Execute (GBrowse - ssh remote):
     let opts = {
