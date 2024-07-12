@@ -21,7 +21,7 @@ function! cgit#fugitive#handler(opts, ...)
     " If the branch/tag doesn't exist upstream, the URL won't be valid
     " Could check upstream refs?
     if path =~# '^\.git/refs/heads/'
-        return root . '/log/' . path[16:-1]
+        return root . '/log/?h=' . path[16:-1]
     elseif path =~# '^\.git/refs/tags/'
         return root . '/tag/?h=' . path[15:-1]
     elseif path =~# '^\.git/refs/.'
