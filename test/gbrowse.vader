@@ -60,6 +60,24 @@ Execute (GBrowse - commit type):
     let url = g:fugitive_browse_handlers[0](opts)
     AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/commit/?id=a935a734765575b33da6c50fe8d0175e70e0e542', url
 
+Execute (GBrowse - branch refs):
+    let opts = {
+      \'remote': 'git@git.example.com:fugitive-cgit.vim.git',
+      \'path': '.git/refs/heads/master',
+    \}
+    let g:fugitive_cgit_domains = ['https://git.example.com']
+    let url = g:fugitive_browse_handlers[0](opts)
+    AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/log/?h=master', url
+
+Execute (GBrowse - tag refs):
+    let opts = {
+      \'remote': 'git@git.example.com:fugitive-cgit.vim.git',
+      \'path': '.git/refs/tags/0.1.2',
+    \}
+    let g:fugitive_cgit_domains = ['https://git.example.com']
+    let url = g:fugitive_browse_handlers[0](opts)
+    AssertEqual 'https://git.example.com/fugitive-cgit.vim.git/tag/?h=0.1.2', url
+
 Execute (GBrowse - ssh remote):
     let opts = {
       \'remote': 'git@git.example.com:fugitive-cgit.vim.git',
