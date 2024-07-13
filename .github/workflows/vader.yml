@@ -1,5 +1,10 @@
 name: Fugitive cgit
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
 jobs:
   Vader:
     strategy:
