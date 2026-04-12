@@ -4,6 +4,8 @@ on:
     branches:
       - master
   pull_request:
+  schedule:
+    - cron: '0 19 * * 4'
   workflow_dispatch:
 jobs:
   Vader:
